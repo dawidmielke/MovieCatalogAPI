@@ -33,7 +33,7 @@ namespace MovieCatalogAPI.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("last")]
+        [HttpGet("Last")]
         public IActionResult GetLastAddedMovie()
         {
             if (movies.Count == 0)
@@ -48,7 +48,11 @@ namespace MovieCatalogAPI.Controllers
         [Route("year/{year}")]
         public IActionResult GetMovieByYear(int year)
         {
-            var movieByYear = movies.FindAll(x => x.Year == year);
+            var movieByYear = movies.Find(x => x.Year == year);
+            if(movieByYear is null)
+            {
+                return NotFound("Sorry, but this year doesn't match");
+            }
             return Ok(movieByYear);
         }
 
@@ -56,7 +60,11 @@ namespace MovieCatalogAPI.Controllers
         [Route("genre/{genre}")]
         public IActionResult GetMovieByGenre(string genre)
         {
-            var movieByGenre = movies.FindAll(x => x.Genre == genre);
+            var movieByGenre = movies.FindAll(x => x.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
+            if(movieByGenre is null)
+            {
+                return NotFound("Sorry, but this genre doesn't match to any movie");
+            }
             return Ok(movieByGenre);
         }
     }
