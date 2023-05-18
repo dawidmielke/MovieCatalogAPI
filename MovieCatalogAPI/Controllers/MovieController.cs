@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieCatalogAPI.Models;
 using MovieCatalogAPI.Services.MovieService;
+using System.Runtime.InteropServices;
 
 namespace MovieCatalogAPI.Controllers
 {
@@ -8,62 +9,51 @@ namespace MovieCatalogAPI.Controllers
     [ApiController]
     public class MovieController : Controller
     {
-        public List<Movie> movies = new List<Movie>
+        private readonly MovieService _movieService;
+
+        public MovieController(MovieService movieService)
         {
-            new Movie
-            {
-                Id = 1,
-                Year = 2012,
-                Title = "Django",
-                Genre = "Western"
-            },
-            new Movie
-            {
-                Id = 2,
-                Year = 2011,
-                Title = "Intouchables",
-                Genre = "Drama"
-            }
-        };
+            _movieService = movieService;
+        }
 
         [HttpPost]
-        public IActionResult AddMovie(Movie movie)
+        public async Task<IActionResult> AddMovie(Movie movie)
         {
-            movies.Add(movie);
-            return Ok(movies);
+            _movieService.AddMovie(movie);
+            return Ok();
         }
 
         [HttpGet("Last")]
-        public IActionResult GetLastAddedMovie()
+        public async Task<IActionResult> GetLastAddedMovie()
         {
-            if (movies.Count == 0)
+            var lastAddedMovie = _movieService.GetLastAddedMovie();
+            if(lastAddedMovie == null)
             {
                 return NotFound();
             }
-            var lastMovie = movies[movies.Count - 1];
-            return Ok(lastMovie);
+            return Ok(lastAddedMovie);
         }
 
         [HttpGet]
         [Route("year/{year}")]
-        public IActionResult GetMovieByYear(int year)
+        public async Task<IActionResult> GetMovieByYear(int year)
         {
-            var movieByYear = movies.Find(x => x.Year == year);
-            if(movieByYear is null)
+            var movieByYear = _movieService.GetMovieByYear(year);
+            if(movieByYear == null)
             {
-                return NotFound("Sorry, but this year doesn't match");
+                return NotFound();
             }
             return Ok(movieByYear);
         }
 
         [HttpGet]
         [Route("genre/{genre}")]
-        public IActionResult GetMovieByGenre(string genre)
+        public async Task<IActionResult> GetMovieByGenre(string genre)
         {
-            var movieByGenre = movies.FindAll(x => x.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
-            if(movieByGenre is null)
+            var movieByGenre = _movieService.GetMovieByGenre(genre);
+            if( movieByGenre == null)
             {
-                return NotFound("Sorry, but this genre doesn't match to any movie");
+                return NotFound();
             }
             return Ok(movieByGenre);
         }

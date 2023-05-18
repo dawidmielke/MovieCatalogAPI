@@ -1,3 +1,4 @@
+using MovieCatalogAPI.Services.MovieService;
 
 namespace MovieCatalogAPI
 {
@@ -13,6 +14,7 @@ namespace MovieCatalogAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddTransient<IMovieService, MovieService>();
 
             var app = builder.Build();
 

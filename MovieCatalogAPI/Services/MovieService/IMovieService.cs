@@ -4,10 +4,10 @@ namespace MovieCatalogAPI.Services.MovieService
 {
     public interface IMovieService
     {
-        List<Movie> AddMovie(Movie model);
-        Movie GetLastAddedMovie(int id);
-        Movie GetMovieByYear(int year);
-        Movie GetMovieByGenre(string genre);
+        void AddMovie(Movie model);
+        Movie? GetLastAddedMovie();
+        List<Movie>? GetMovieByYear(int year);
+        List<Movie> GetMovieByGenre(string genre);
         
     }
 }

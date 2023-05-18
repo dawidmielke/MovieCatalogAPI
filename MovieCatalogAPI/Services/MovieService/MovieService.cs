@@ -5,7 +5,7 @@ namespace MovieCatalogAPI.Services.MovieService
     public class MovieService : IMovieService
     {
 
-        public List<Movie> movies = new List<Movie>
+        public static List<Movie> _movies = new List<Movie>
         {
             new Movie
             {
@@ -23,24 +23,31 @@ namespace MovieCatalogAPI.Services.MovieService
             }
         };
 
-        public List<Movie> AddMovie(Movie model)
+        //public MovieService()
+        //{
+        //    _movies = new List<Movie>();
+        //}
+
+        public void AddMovie(Movie model)
         {
-            throw new NotImplementedException();
+            _movies.Add(model);
         }
 
-        public Movie GetLastAddedMovie(int id)
+        public Movie GetLastAddedMovie()
         {
-            throw new NotImplementedException();
+            if(_movies.Count == 0) 
+                return null;
+            return _movies.Last();
         }
 
-        public Movie GetMovieByGenre(string genre)
+        public List<Movie> GetMovieByGenre(string genre)
         {
-            throw new NotImplementedException();
+            return _movies.Where(m => m.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        public Movie GetMovieByYear(int year)
+        public List<Movie> GetMovieByYear(int year)
         {
-            throw new NotImplementedException();
+            return _movies.Where(m => m.Year == year).ToList();
         }
     }
 }
