@@ -48,8 +48,8 @@ namespace MovieCatalogAPI.Controllers
            {
                 return NotFound();
            }
-            var lastMovie = _movies[_movies.Count - 1];
-            return Ok(lastMovie);
+           var lastMovie = _movies[_movies.Count - 1];
+           return Ok(lastMovie);
         }
 
         [HttpGet]
