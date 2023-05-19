@@ -1,5 +1,5 @@
-using MovieCatalogAPI.Services.MovieService;
-
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 namespace MovieCatalogAPI
 {
     public class Program
@@ -7,14 +7,19 @@ namespace MovieCatalogAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddTransient<IMovieService, MovieService>();
+            //builder.ConfigureLogging((hostingContext, logging) =>
+            //{
+            //    logging.AddConsole();
+            //    logging.SetMinimumLevel(LogLevel.Information);
+            //});
+
 
             var app = builder.Build();
 
