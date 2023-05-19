@@ -59,7 +59,7 @@ namespace MovieCatalogAPI.Controllers
             var movieByYear = _movies.FindAll(x => x.Year == year);
             if(movieByYear.Count == 0)
             {
-                _logger.LogWarning($"Movie with this {year} not found");
+                _logger.LogWarning($"Movie with this year: {year} not found");
                 return NotFound();
             }
             return Ok(movieByYear);
@@ -72,7 +72,7 @@ namespace MovieCatalogAPI.Controllers
             var movieByGenre = _movies.FindAll(x =>x.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
             if (movieByGenre.Count == 0)
             {
-                _logger.LogWarning($"Movie with this {genre} not found");
+                _logger.LogWarning($"Movie with this genre: {genre} not found");
                 return NotFound();
             }
             return Ok(movieByGenre);
