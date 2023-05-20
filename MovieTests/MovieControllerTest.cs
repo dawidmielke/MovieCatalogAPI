@@ -26,23 +26,39 @@ namespace MovieTests
             Assert.IsType<OkResult>(result);
         }
 
-        //[Fact]
-        //public void GetLastAddedMovie_WithEmptyMovies_ReturnsOkResult()
-        //{
-        //    var loggerMock = new Mock<ILogger<MovieController>>();
-        //    var controller = new MovieController(loggerMock.Object);
-        //    var movie = new Movie
-        //    {
-        //        Id = 4,
-        //        Year = 1999,
-        //        Title = "Fight Club",
-        //        Genre = "Thriller"
-        //    };
-        //    var addMovie = controller.AddMovie(movie);
-        //    var result = controller.GetLastAddedMovie(movie);
+        [Fact]
+        public void GetLastAddedMovie_WithMovies_ReturnsNotNullResult()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<MovieController>>();
+            var controller = new MovieController(loggerMock.Object);
+            var movies = new List<Movie>
+            {
+                new Movie
+                {
+                    Id = 1,
+                    Year = 2012,
+                    Title = "Django",
+                    Genre = "Western"
+                },
+                new Movie
+                {
+                    Id = 2,
+                    Year = 2011,
+                    Title = "Intouchables",
+                    Genre = "Drama"
+                }
+            };
+            controller._movies = movies;
 
-        //    Assert.IsType<OkResult>(result);
-        //}
+            // Act
+            var result = controller.GetLastAddedMovie();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, movies.Count);
+        }
+
 
         [Fact]
         public void GetMovieByYear_WithInvalidYear_ReturnsNotFoundResult()
@@ -52,7 +68,7 @@ namespace MovieTests
 
             var result = controller.GetMovieByYear(-2022);
 
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
@@ -63,7 +79,7 @@ namespace MovieTests
 
             var result = controller.GetMovieByGenre("afdsfsad");
 
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
     }
 }

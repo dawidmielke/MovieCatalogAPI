@@ -46,10 +46,11 @@ namespace MovieCatalogAPI.Controllers
         {
            if(_movies.Count == 0)
            {
+                _logger.LogWarning("Last added movie not found");
                 return NotFound();
            }
            var lastMovie = _movies[_movies.Count - 1];
-            _logger.LogInformation($"Movie found");
+            _logger.LogInformation($"Last added movie found");
            return Ok(lastMovie);
         }
 
@@ -61,8 +62,9 @@ namespace MovieCatalogAPI.Controllers
             if(movieByYear.Count == 0)
             {
                 _logger.LogWarning($"Movie with this year: {year} not found");
-                return NotFound();
+                return NotFound($"Movie with this year: {year} not found");
             }
+            _logger.LogInformation($"Movie by year: {year} found");
             return Ok(movieByYear);
         }
 
@@ -74,8 +76,9 @@ namespace MovieCatalogAPI.Controllers
             if (movieByGenre.Count == 0)
             {
                 _logger.LogWarning($"Movie with this genre: {genre} not found");
-                return NotFound();
+                return NotFound($"Movie with this genre: {genre} not found");
             }
+            _logger.LogInformation($"Movie by genre: {genre} found");
             return Ok(movieByGenre);
         }
     }
