@@ -49,6 +49,7 @@ namespace MovieCatalogAPI.Controllers
                 return NotFound();
            }
            var lastMovie = _movies[_movies.Count - 1];
+            _logger.LogInformation($"Movie found");
            return Ok(lastMovie);
         }
 

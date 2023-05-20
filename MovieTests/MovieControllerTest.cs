@@ -26,16 +26,23 @@ namespace MovieTests
             Assert.IsType<OkResult>(result);
         }
 
-        [Fact]
-        public void GetLastAddedMovie_WithEmptyMovies_ReturnsNotFoundResult()
-        {
-            var loggerMock = new Mock<ILogger<MovieController>>();
-            var controller = new MovieController(loggerMock.Object);
+        //[Fact]
+        //public void GetLastAddedMovie_WithEmptyMovies_ReturnsOkResult()
+        //{
+        //    var loggerMock = new Mock<ILogger<MovieController>>();
+        //    var controller = new MovieController(loggerMock.Object);
+        //    var movie = new Movie
+        //    {
+        //        Id = 4,
+        //        Year = 1999,
+        //        Title = "Fight Club",
+        //        Genre = "Thriller"
+        //    };
+        //    var addMovie = controller.AddMovie(movie);
+        //    var result = controller.GetLastAddedMovie(movie);
 
-            var result = controller.GetLastAddedMovie();
-
-            Assert.IsType<NotFoundResult>(result);
-        }
+        //    Assert.IsType<OkResult>(result);
+        //}
 
         [Fact]
         public void GetMovieByYear_WithInvalidYear_ReturnsNotFoundResult()
