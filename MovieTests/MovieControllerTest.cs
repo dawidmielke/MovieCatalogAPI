@@ -61,7 +61,7 @@ namespace MovieTests
 
 
         [Fact]
-        public void GetMovieByYear_WithInvalidYear_ReturnsNotFoundResult()
+        public void GetMovieByYear_WithInvalidYear_ReturnsNotFoundObjectResult()
         {
             var loggerMock = new Mock<ILogger<MovieController>>();
             var controller = new MovieController(loggerMock.Object);
@@ -72,7 +72,7 @@ namespace MovieTests
         }
 
         [Fact]
-        public void GetMovieByGenre_WithInvalidGenre_ReturnsNotFoundResult()
+        public void GetMovieByGenre_WithInvalidGenre_ReturnsNotFoundObjectResult()
         {
             var loggerMock = new Mock<ILogger<MovieController>>();
             var controller = new MovieController(loggerMock.Object);
